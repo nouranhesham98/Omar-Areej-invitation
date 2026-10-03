@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دعوة زفاف | عمر & أريج</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts for Elegant Arabic & Serif Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@300;400;600;700;800&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        theme: {
+                            primary: '#3D1420',    /* Deep Royal Burgundy */
+                            secondary: '#5C1D30',  /* Soft Crimson Accent */
+                            gold: '#C5A059',       /* Luxury Gold */
+                            goldDark: '#9A7532',   /* Metallic Dark Gold */
+                            goldLight: '#E8D2A7',  /* Delicate Gold Tint */
+                            bgCream: '#FAF7F2',    /* Warm Soft Ivory */
+                            cardBg: '#FFFFFF',     /* Crisp White */
+                            textDark: '#221510',   /* Rich Deep Charcoal */
+                            textMuted: '#6E5D52'   /* Muted Bronze Brown */
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        amiri: ['Amiri', 'serif'],
+                        ruqaa: ['Aref Ruqaa', 'serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        cormorant: ['Cormorant Garamond', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --color-primary: #3D1420;
+            --color-gold: #C5A059;
+            --color-bg-cream: #FAF7F2;
+            --font-gold-gradient: linear-gradient(135deg, #A87E2A 0%, #D8B868 35%, #9A7532 70%, #C5A059 100%);
+        }
+
+        body {
+            background-color: var(--color-bg-cream);
+            color: #221510;
+            background-image: radial-gradient(#C5A059 0.45px, transparent 0.45px), radial-gradient(#C5A059 0.45px, #FAF7F2 0.45px);
+            background-size: 18px 18px;
+            background-position: 0 0, 9px 9px;
+            opacity: 0.98;
+        }
+
+        /* Luxury Gold Metallic Gradient Text */
+        .gold-text {
+            background: linear-gradient(135deg, #8C6221 0%, #C5A059 40%, #8C6221 80%, #B88E3E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Ultra-luxury shimmer effect */
+        .gold-border-glow {
+            box-shadow: 0 0 25px rgba(197, 160, 89, 0.25), 0 20px 45px -10px rgba(61, 20, 32, 0.15);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF7F2;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C5A059;
+            border-radius: 4px;
+        }
+
+        /* Arch Physical Invitation Card Styling */
+        .arch-card {
+            background: #FFFFFF;
+            border: 2px solid #D8C39D;
+            box-shadow: 0 20px 40px -15px rgba(61, 20, 32, 0.12);
+            position: relative;
+        }
+
+        .arch-inner-border {
+            border: 1px solid rgba(197, 160, 89, 0.45);
+            border-radius: 190px 190px 28px 28px;
+        }
+
+        /* Floating Golden Dust Canvas */
+        #petalsCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="font-cairo min-h-screen relative overflow-x-hidden antialiased selection:bg-theme-gold/20">
+
+    <!-- Golden Dust & Falling Petals Canvas -->
+    <canvas id="petalsCanvas"></canvas>
+
+    <!-- Luxury Envelope Opening Screen -->
+    <div id="envelopeOverlay" class="fixed inset-0 z-50 bg-[#1A080C]/90 backdrop-blur-md flex items-center justify-center p-4 transition-all duration-700">
+        <div class="relative max-w-sm w-full bg-[#FAF7F2] rounded-[32px] p-8 border-2 border-theme-gold gold-border-glow text-center text-theme-textDark overflow-hidden transform transition duration-300">
+            
+            <!-- Floral & Wreath Monogram Accent -->
+            <div class="w-20 h-20 mx-auto mb-3 rounded-full border-2 border-theme-gold/80 flex flex-col items-center justify-center bg-white shadow-md">
+                <span class="font-cinzel text-xl font-bold tracking-widest text-theme-goldDark">OA</span>
+                <span class="text-[8px] uppercase tracking-tighter text-theme-textMuted font-cinzel">FOREVER</span>
+            </div>
+
+            <span class="text-xs tracking-widest text-theme-goldDark font-amiri block my-1 font-bold">بسم الله الرحمن الرحيم</span>
+            <h3 class="text-xs uppercase tracking-wider text-theme-primary mb-3 font-bold">دعوة خاصة لحضور حفل زفاف</h3>
+            <div class="w-16 h-0.5 bg-gradient-to-r from-transparent via-theme-gold to-transparent mx-auto my-2"></div>
+            
+            <div class="py-3 font-ruqaa text-2xl text-theme-primary font-bold">
+                عمر عبد العزيز السيد <br>
+                <span class="text-base text-theme-gold my-1 block">&</span>
+                أريج ممدوح زايد
+            </div>
+            
+            <p class="text-xs text-theme-textMuted mt-1 mb-6 font-cairo">
+                يسرنا ويشرفنا حضوركم لنسعد بمشاركتكم فرحتنا
+            </p>
+
+            <button onclick="openEnvelope()" class="w-full py-3.5 px-6 rounded-full bg-gradient-to-r from-theme-primary via-theme-secondary to-theme-primary text-white font-bold text-xs shadow-xl hover:brightness-110 transition-all duration-300 flex items-center justify-center gap-2 border border-theme-gold/60">
+                <i class="fa-solid fa-envelope-open text-amber-300"></i>
+                <span>افتح الدعوة الرسمية</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main class="max-w-xl mx-auto pt-10 pb-16 px-4 space-y-8">
+        
+        <!-- Main Physical Card Replica matching image_2 -->
+        <section class="arch-card rounded-[44px] p-4 sm:p-8 gold-border-glow relative overflow-hidden text-center my-2">
+            
+            <!-- Elegant Corner Ornaments -->
+            <div class="absolute top-3 right-3 text-theme-gold/30 text-2xl pointer-events-none">✨</div>
+            <div class="absolute top-3 left-3 text-theme-gold/30 text-2xl pointer-events-none">✨</div>
+
+            <div class="arch-inner-border rounded-t-[170px] p-5 sm:p-9 relative bg-gradient-to-b from-white via-[#FFFDF9] to-[#FAF7F2]">
+                
+                <!-- Top Monogram Block -->
+                <div class="flex justify-between items-start mb-4">
+                    <div class="text-right">
+                        <span class="block font-cinzel text-xs tracking-widest text-theme-textMuted font-bold">OUR FOREVER</span>
+                        <span class="block font-cinzel text-[10px] tracking-widest text-theme-goldDark font-bold">BEGINS</span>
+                    </div>
+                    <!-- Monogram OA Icon -->
+                    <div class="w-14 h-14 rounded-full border-2 border-theme-gold/80 flex items-center justify-center text-theme-goldDark font-cinzel font-bold text-xl bg-white shadow-md">
+                        OA
+                    </div>
+                </div>
+
+                <!-- Quranic Verse -->
+                <div class="my-6 max-w-md mx-auto">
+                    <p class="text-xs sm:text-sm text-theme-textDark font-amiri leading-relaxed font-bold">
+                        ﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُمْ أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾
+                    </p>
+                    <span class="text-[11px] text-theme-goldDark font-amiri block mt-2 font-bold">( الروم : ٢١ )</span>
+                </div>
+
+                <div class="w-28 h-0.5 bg-gradient-to-r from-transparent via-theme-gold to-transparent mx-auto my-6"></div>
+
+                <!-- Couple Names Calligraphy Display -->
+                <div class="my-6">
+                    <h1 class="font-ruqaa text-3xl sm:text-5xl text-theme-goldDark font-bold my-2 leading-tight">
+                        عمر عبد العزيز السيد
+                    </h1>
+                    
+                    <div class="my-3 flex items-center justify-center gap-3">
+                        <span class="h-px bg-gradient-to-r from-transparent to-theme-gold w-14"></span>
+                        <span class="font-cinzel text-2xl text-theme-primary font-bold">&</span>
+                        <span class="h-px bg-gradient-to-l from-transparent to-theme-gold w-14"></span>
+                    </div>
+
+                    <h1 class="font-ruqaa text-3xl sm:text-5xl text-theme-goldDark font-bold my-2 leading-tight">
+                        أريج ممدوح زايد
+                    </h1>
+                </div>
+
+                <p class="font-cinzel text-xs tracking-widest text-theme-textMuted uppercase my-5 font-bold">
+                    TOGETHER WITH THEIR FAMILIES
+                </p>
+
+                <div class="w-20 h-0.5 bg-theme-gold/50 mx-auto my-6"></div>
+
+                <!-- Event Details matching image_2 -->
+                <div class="space-y-6 max-w-xs mx-auto my-6">
+                    
+                    <!-- Date -->
+                    <div class="text-center">
+                        <div class="w-11 h-11 rounded-full bg-theme-gold/10 border border-theme-gold/50 flex items-center justify-center mx-auto mb-2 text-theme-goldDark shadow-sm">
+                            <i class="fa-regular fa-calendar-check text-lg"></i>
+                        </div>
+                        <span class="font-cinzel text-[10px] tracking-widest text-theme-textMuted block uppercase font-bold">DATE</span>
+                        <p class="text-sm sm:text-base font-bold text-theme-textDark">الخميس، 6 أكتوبر 2026</p>
+                        <span class="text-xs text-theme-goldDark font-bold block">(6/10/2026)</span>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="text-center">
+                        <div class="w-11 h-11 rounded-full bg-theme-gold/10 border border-theme-gold/50 flex items-center justify-center mx-auto mb-2 text-theme-goldDark shadow-sm">
+                            <i class="fa-solid fa-location-dot text-lg"></i>
+                        </div>
+                        <span class="font-cinzel text-[10px] tracking-widest text-theme-textMuted block uppercase font-bold">LOCATION</span>
+                        <p class="text-sm font-bold text-theme-textDark">العاشر من رمضان</p>
+                        <p class="text-sm font-bold text-theme-primary mt-0.5">نادي الصفوة قاعة أركان</p>
+                    </div>
+
+                    <!-- Time -->
+                    <div class="text-center">
+                        <div class="w-11 h-11 rounded-full bg-theme-gold/10 border border-theme-gold/50 flex items-center justify-center mx-auto mb-2 text-theme-goldDark shadow-sm">
+                            <i class="fa-regular fa-clock text-lg"></i>
+                        </div>
+                        <span class="font-cinzel text-[10px] tracking-widest text-theme-textMuted block uppercase font-bold">TIME</span>
+                        <p class="text-sm sm:text-base font-bold text-theme-textDark">في تمام الساعة 7:30 مساءً</p>
+                    </div>
+
+                </div>
+
+                <div class="pt-5 border-t border-theme-gold/30 mt-6">
+                    <p class="font-cormorant italic text-xl text-theme-goldDark font-bold">
+                        A New Chapter TOGETHER
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Countdown Timer & Direct Google Maps Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            
+            <!-- Countdown Timer Card -->
+            <div class="bg-white rounded-3xl p-5 border border-theme-gold/40 shadow-lg text-center flex flex-col justify-center">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-theme-primary mb-3">
+                    <i class="fa-regular fa-hourglass-half ml-1 text-theme-gold"></i> المتبقي على ليلة العمر
+                </h3>
+                <div class="grid grid-cols-4 gap-2 text-center" id="countdownTimer">
+                    <div class="p-2 sm:p-2.5 rounded-2xl bg-[#FAF7F2] border border-theme-gold/30">
+                        <span id="days" class="block font-bold text-lg sm:text-xl text-theme-primary">00</span>
+                        <span class="text-[10px] text-theme-textMuted font-bold">يوم</span>
+                    </div>
+                    <div class="p-2 sm:p-2.5 rounded-2xl bg-[#FAF7F2] border border-theme-gold/30">
+                        <span id="hours" class="block font-bold text-lg sm:text-xl text-theme-primary">00</span>
+                        <span class="text-[10px] text-theme-textMuted font-bold">ساعة</span>
+                    </div>
+                    <div class="p-2 sm:p-2.5 rounded-2xl bg-[#FAF7F2] border border-theme-gold/30">
+                        <span id="minutes" class="block font-bold text-lg sm:text-xl text-theme-primary">00</span>
+                        <span class="text-[10px] text-theme-textMuted font-bold">دقيقة</span>
+                    </div>
+                    <div class="p-2 sm:p-2.5 rounded-2xl bg-[#FAF7F2] border border-theme-gold/30">
+                        <span id="seconds" class="block font-bold text-lg sm:text-xl text-theme-primary">00</span>
+                        <span class="text-[10px] text-theme-textMuted font-bold">ثانية</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Links -->
+            <div class="bg-white rounded-3xl p-5 border border-theme-gold/40 shadow-lg flex flex-col justify-center gap-3">
+                <a href="https://maps.app.goo.gl/YK7SQmqu2MG5isj78?g_st=ic" target="_blank" rel="noopener noreferrer" class="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-theme-primary to-theme-secondary text-white font-bold text-xs shadow-md hover:brightness-110 transition flex items-center justify-center gap-2 border border-theme-gold/40">
+                    <i class="fa-solid fa-map-location-dot text-amber-300 text-sm"></i>
+                    <span>موقع الحفل على خرائط جوجل</span>
+                </a>
+
+                <button onclick="openCalendarModal()" class="w-full py-3.5 px-4 rounded-2xl bg-[#FAF7F2] text-theme-primary font-bold text-xs border border-theme-gold/30 hover:bg-amber-50/60 transition flex items-center justify-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-calendar-plus text-theme-gold text-sm"></i>
+                    <span>إضافة للتقويم (أندرويد / آبل)</span>
+                </button>
+            </div>
+
+        </section>
+
+        <!-- Pure Guestbook Section -->
+        <section id="memorySection" class="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-theme-gold/40 relative">
+            <div class="text-center mb-6">
+                <span class="w-12 h-12 rounded-full bg-theme-gold/10 text-theme-goldDark inline-flex items-center justify-center mb-2 text-xl border border-theme-gold/40 shadow-sm">
+                    <i class="fa-solid fa-heart"></i>
+                </span>
+                <h2 class="text-xl font-bold text-theme-primary">كتابة كلمة أو تهنئة للعروسين</h2>
+                <p class="text-xs text-theme-textMuted mt-1">
+                    اكتبوا كلمة طيبة للعروسين عمر وأريج لتصل لقلوبهما ❤️
+                </p>
+            </div>
+
+            <!-- Add Memory Card Form -->
+            <form onsubmit="addMemoryPost(event)" class="bg-[#FAF7F2] rounded-2xl p-5 border border-theme-gold/30 shadow-inner space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-theme-textDark mb-1">الاسم الكريم</label>
+                        <input type="text" id="memoryAuthor" required placeholder="مثال: أحمد السيد / عائلة زايد" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-xs focus:outline-none focus:border-theme-gold font-semibold">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-theme-textDark mb-1">صلة القربة / الصفة (اختياري)</label>
+                        <input type="text" id="memoryRelation" placeholder="مثال: صديق العريس / أقارب العروس" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-xs focus:outline-none focus:border-theme-gold font-semibold">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-theme-textDark mb-1">رسالتك أو تهنئتك للعروسين</label>
+                    <textarea id="memoryText" required rows="3" placeholder="بارك الله لهما وبارك عليهما وجمع بينهما في خير..." class="w-full px-3.5 py-2.5 rounded-xl border border-gray-200 bg-white text-xs focus:outline-none focus:border-theme-gold font-semibold"></textarea>
+                </div>
+
+                <!-- Sticker Selection -->
+                <div class="flex items-center gap-2 overflow-x-auto pb-1">
+                    <span class="text-[11px] font-bold text-theme-textMuted whitespace-nowrap">رمز المباركة:</span>
+                    <button type="button" onclick="selectSticker('💍')" class="sticker-btn text-base p-1.5 rounded-lg border border-amber-300 bg-amber-50">💍</button>
+                    <button type="button" onclick="selectSticker('💐')" class="sticker-btn text-base p-1.5 rounded-lg border border-gray-200">💐</button>
+                    <button type="button" onclick="selectSticker('✨')" class="sticker-btn text-base p-1.5 rounded-lg border border-gray-200">✨</button>
+                    <button type="button" onclick="selectSticker('🕊️')" class="sticker-btn text-base p-1.5 rounded-lg border border-gray-200">🕊️</button>
+                    <button type="button" onclick="selectSticker('❤️')" class="sticker-btn text-base p-1.5 rounded-lg border border-gray-200">❤️</button>
+                    <button type="button" onclick="selectSticker('👑')" class="sticker-btn text-base p-1.5 rounded-lg border border-gray-200">👑</button>
+                    <input type="hidden" id="selectedStickerVal" value="💍">
+                </div>
+
+                <div class="flex justify-end pt-1">
+                    <button type="submit" class="px-7 py-3 rounded-xl bg-theme-primary text-white font-bold text-xs shadow-md hover:bg-theme-secondary transition flex items-center gap-2 border border-theme-gold/40">
+                        <span>إرسال التهنئة</span>
+                        <i class="fa-solid fa-paper-plane text-amber-300"></i>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Protected Messages Button for Bride & Groom -->
+            <div class="mt-8 pt-6 border-t border-theme-gold/30 text-center">
+                <div class="p-5 rounded-2xl bg-[#FAF7F2] border border-theme-gold/30 shadow-xs max-w-md mx-auto">
+                    <div class="w-10 h-10 rounded-full bg-theme-primary/10 text-theme-primary flex items-center justify-center mx-auto mb-2 border border-theme-gold/40">
+                        <i class="fa-solid fa-lock text-theme-goldDark"></i>
+                    </div>
+                    <h3 class="font-bold text-xs text-theme-primary mb-1">صندوق التهاني والرسائل للعروسين</h3>
+                    <p class="text-[11px] text-theme-textMuted mb-3">هذا القسم مخصص للعروسين عمر وأريج لقراءة التهاني الواردة</p>
+                    <button onclick="openPasswordModal()" class="px-6 py-2.5 rounded-full bg-theme-primary text-white font-bold text-xs shadow-md hover:bg-theme-secondary transition flex items-center justify-center gap-2 mx-auto border border-theme-gold/40">
+                        <i class="fa-solid fa-key text-amber-300"></i>
+                        <span>عرض التهاني والذكريات (للعروسين فقط)</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Password Modal for Groom & Bride -->
+        <div id="passwordModal" class="fixed inset-0 z-50 bg-[#1A080C]/80 backdrop-blur-md hidden items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full border-2 border-theme-gold shadow-2xl text-center relative">
+                <button onclick="closePasswordModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="w-14 h-14 rounded-full bg-theme-gold/10 text-theme-goldDark flex items-center justify-center mx-auto mb-3 border border-theme-gold/40 shadow-sm">
+                    <i class="fa-solid fa-user-shield text-xl"></i>
+                </div>
+                <h3 class="text-base font-bold text-theme-primary mb-1">دخول العروسين</h3>
+                <p class="text-xs text-theme-textMuted mb-4">أدخل كلمة المرور لرؤية الرسائل والتهاني</p>
+                
+                <input type="password" id="passInput" placeholder="أدخل كلمة المرور" class="w-full text-center px-4 py-3 rounded-xl border border-theme-gold/40 bg-[#FAF7F2] text-sm focus:outline-none focus:border-theme-gold font-bold tracking-widest mb-4">
+                
+                <button onclick="verifyPassword()" class="w-full py-3 rounded-full bg-theme-primary text-white font-bold text-xs shadow-md hover:bg-theme-secondary transition flex items-center justify-center gap-2 border border-theme-gold/40">
+                    <i class="fa-solid fa-unlock-keyhole text-amber-300"></i>
+                    <span>فتح الصندوق</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Calendar Picker Modal for Android & Apple -->
+        <div id="calendarModal" class="fixed inset-0 z-50 bg-[#1A080C]/80 backdrop-blur-md hidden items-center justify-center p-4">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full border-2 border-theme-gold shadow-2xl text-center relative">
+                <button onclick="closeCalendarModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="w-12 h-12 rounded-full bg-theme-gold/10 text-theme-goldDark flex items-center justify-center mx-auto mb-3 border border-theme-gold/40 shadow-sm">
+                    <i class="fa-solid fa-calendar-plus text-xl"></i>
+                </div>
+                <h3 class="text-base font-bold text-theme-primary mb-1">إضافة المناسبة للتقويم</h3>
+                <p class="text-xs text-theme-textMuted mb-5">اختر نوع جهازك لحفظ الموعد مباشرة</p>
+                
+                <div class="space-y-3">
+                    <!-- Google / Android Calendar -->
+                    <button onclick="addToGoogleCalendar()" class="w-full py-3.5 px-4 rounded-2xl bg-[#FAF7F2] text-theme-primary font-bold text-xs border border-theme-gold/40 hover:bg-amber-50 transition flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-brands fa-android text-emerald-600 text-lg"></i>
+                            <i class="fa-brands fa-google text-blue-500 text-base"></i>
+                            <span>أندرويد / تقويم جوجل</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-left text-xs text-theme-goldDark"></i>
+                    </button>
+
+                    <!-- Apple / iPhone Calendar -->
+                    <button onclick="addToAppleCalendar()" class="w-full py-3.5 px-4 rounded-2xl bg-[#FAF7F2] text-theme-primary font-bold text-xs border border-theme-gold/40 hover:bg-amber-50 transition flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <i class="fa-brands fa-apple text-slate-800 text-xl"></i>
+                            <span>آيفون / تقويم آبل (iCal)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-left text-xs text-theme-goldDark"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Private Messages View Modal -->
+        <div id="messagesModal" class="fixed inset-0 z-50 bg-[#1A080C]/85 backdrop-blur-md hidden items-center justify-center p-4">
+            <div class="bg-[#FAF7F2] rounded-3xl p-5 sm:p-7 max-w-xl w-full max-h-[85vh] flex flex-col border-2 border-theme-gold shadow-2xl relative">
+                <div class="flex justify-between items-center pb-4 border-b border-theme-gold/30">
+                    <div class="flex items-center gap-2">
+                        <span class="text-2xl">💌</span>
+                        <div>
+                            <h3 class="text-base font-bold text-theme-primary">رسائل وتهاني المهنئين</h3>
+                            <p class="text-[11px] text-theme-textMuted">خاص بالعروسين عمر & أريج</p>
+                        </div>
+                    </div>
+                    <button onclick="closeMessagesModal()" class="w-8 h-8 rounded-full bg-white border border-theme-gold/40 flex items-center justify-center text-theme-primary hover:bg-amber-50">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div id="memoryWallGrid" class="overflow-y-auto py-4 space-y-3 pr-1 my-2 flex-1">
+                    <!-- Dynamically populated memory cards -->
+                </div>
+
+                <div class="pt-3 border-t border-theme-gold/30 text-center">
+                    <button onclick="closeMessagesModal()" class="px-6 py-2 rounded-full bg-theme-primary text-white text-xs font-bold shadow-md hover:bg-theme-secondary transition">
+                        إغلاق
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center text-xs text-theme-textMuted py-6">
+            <p class="font-ruqaa text-xl text-theme-goldDark font-bold tracking-wide">دامت دياركم بالمسرات والأفراح عامرة</p>
+        </footer>
+    </main>
+
+    <script>
+        const weddingConfig = {
+            groom: "عمر عبد العزيز السيد",
+            bride: "أريج ممدوح زايد",
+            dateText: "الخميس، 6 أكتوبر 2026",
+            hallName: "نادي الصفوة قاعة أركان",
+            address: "العاشر من رمضان",
+            targetDate: "2026-10-06T19:30:00",
+            mapUrl: "https://maps.app.goo.gl/YK7SQmqu2MG5isj78?g_st=ic"
+        };
+
+        // Empty wishes array by default (persisted in localStorage)
+        let memoryPosts = JSON.parse(localStorage.getItem('wedding_memories') || '[]');
+
+        function openEnvelope() {
+            const overlay = document.getElementById('envelopeOverlay');
+            overlay.classList.add('opacity-0', 'scale-95', 'pointer-events-none');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 700);
+
+            // Celebration Confetti
+            confetti({
+                particleCount: 80,
+                spread: 65,
+                origin: { y: 0.6 }
+            });
+        }
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const target = new Date(weddingConfig.targetDate).getTime();
+            const difference = target - now;
+
+            if (difference > 0) {
+                const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = d < 10 ? '0' + d : d;
+                document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
+                document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
+                document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+            } else {
+                document.getElementById('countdownTimer').innerHTML = '<div class="col-span-4 p-3 font-bold text-theme-primary text-xs">أهلاً وسهلاً بكم في ليلة العمر!</div>';
+            }
+        }
+
+        function selectSticker(emoji) {
+            document.getElementById('selectedStickerVal').value = emoji;
+            const btns = document.querySelectorAll('.sticker-btn');
+            btns.forEach(b => {
+                if (b.innerText === emoji) {
+                    b.classList.add('border-amber-300', 'bg-amber-50');
+                } else {
+                    b.classList.remove('border-amber-300', 'bg-amber-50');
+                }
+            });
+        }
+
+        function addMemoryPost(e) {
+            e.preventDefault();
+            const author = document.getElementById('memoryAuthor').value;
+            const relation = document.getElementById('memoryRelation').value || "مهنئ كريم";
+            const text = document.getElementById('memoryText').value;
+            const sticker = document.getElementById('selectedStickerVal').value || "✨";
+
+            if (!author || !text) return;
+
+            const newPost = {
+                id: Date.now(),
+                author: author,
+                relation: relation,
+                text: text,
+                sticker: sticker,
+                time: "الآن",
+                likes: 1
+            };
+
+            memoryPosts.unshift(newPost);
+            localStorage.setItem('wedding_memories', JSON.stringify(memoryPosts));
+
+            document.getElementById('memoryAuthor').value = '';
+            document.getElementById('memoryRelation').value = '';
+            document.getElementById('memoryText').value = '';
+
+            showToast("تم إرسال تهنئتك بنجاح وسيراها العروسان! ✨");
+
+            confetti({
+                particleCount: 50,
+                spread: 50,
+                origin: { y: 0.8 }
+            });
+        }
+
+        function openPasswordModal() {
+            document.getElementById('passwordModal').classList.remove('hidden');
+            document.getElementById('passwordModal').classList.add('flex');
+            document.getElementById('passInput').value = '';
+        }
+
+        function closePasswordModal() {
+            document.getElementById('passwordModal').classList.add('hidden');
+            document.getElementById('passwordModal').classList.remove('flex');
+        }
+
+        function verifyPassword() {
+            const pass = document.getElementById('passInput').value;
+            if (pass === '2468') {
+                closePasswordModal();
+                renderMemoryWall();
+                document.getElementById('messagesModal').classList.remove('hidden');
+                document.getElementById('messagesModal').classList.add('flex');
+            } else {
+                showToast("كلمة المرور غير صحيحة!");
+            }
+        }
+
+        function closeMessagesModal() {
+            document.getElementById('messagesModal').classList.add('hidden');
+            document.getElementById('messagesModal').classList.remove('flex');
+        }
+
+        function likeMemory(id) {
+            const post = memoryPosts.find(p => p.id === id);
+            if (post) {
+                post.likes++;
+                localStorage.setItem('wedding_memories', JSON.stringify(memoryPosts));
+                renderMemoryWall();
+            }
+        }
+
+        function renderMemoryWall() {
+            const grid = document.getElementById('memoryWallGrid');
+            
+            if (memoryPosts.length === 0) {
+                grid.innerHTML = `
+                    <div class="text-center py-12 text-theme-textMuted">
+                        <i class="fa-solid fa-envelope-open-text text-4xl mb-3 text-theme-goldDark opacity-60"></i>
+                        <p class="text-xs font-bold text-theme-primary">لا توجد تهاني مضافة حتى الآن</p>
+                        <p class="text-[11px] text-theme-textMuted mt-1">ستظهر هنا جميع التهاني والذكريات التي يكتبها الضيوف</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = memoryPosts.map(post => `
+                <div class="bg-white rounded-2xl p-4 border border-theme-gold/30 shadow-xs flex flex-col justify-between hover:shadow-md transition">
+                    <div>
+                        <div class="flex justify-between items-start mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xl">${post.sticker}</span>
+                                <div>
+                                    <h4 class="font-bold text-xs text-theme-primary">${escapeHtml(post.author)}</h4>
+                                    <span class="text-[10px] text-theme-textMuted">${escapeHtml(post.relation)}</span>
+                                </div>
+                            </div>
+                            <span class="text-[10px] text-gray-400">${post.time}</span>
+                        </div>
+                        <p class="text-xs text-theme-textDark leading-relaxed my-1.5 font-cairo">
+                            "${escapeHtml(post.text)}"
+                        </p>
+                    </div>
+                    <div class="pt-2 border-t border-gray-100 flex justify-between items-center text-[11px] text-theme-textMuted">
+                        <span class="text-[10px]">تهنئة مباركة</span>
+                        <button onclick="likeMemory(${post.id})" class="flex items-center gap-1 text-rose-700 hover:scale-110 transition">
+                            <i class="fa-solid fa-heart text-xs"></i>
+                            <span class="font-bold text-xs">${post.likes}</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function openCalendarModal() {
+            document.getElementById('calendarModal').classList.remove('hidden');
+            document.getElementById('calendarModal').classList.add('flex');
+        }
+
+        function closeCalendarModal() {
+            document.getElementById('calendarModal').classList.add('hidden');
+            document.getElementById('calendarModal').classList.remove('flex');
+        }
+
+        function addToGoogleCalendar() {
+            closeCalendarModal();
+            const title = encodeURIComponent(`حفل زفاف ${weddingConfig.groom} & ${weddingConfig.bride}`);
+            const details = encodeURIComponent(`حضور حفل زفاف بقاعة ${weddingConfig.hallName} - ${weddingConfig.address}`);
+            const location = encodeURIComponent(weddingConfig.mapUrl);
+            const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=20261006T193000/20261006T233000`;
+            window.open(calendarUrl, '_blank');
+        }
+
+        function addToAppleCalendar() {
+            closeCalendarModal();
+            const title = `حفل زفاف ${weddingConfig.groom} و ${weddingConfig.bride}`;
+            const details = `حضور حفل زفاف بقاعة ${weddingConfig.hallName} - ${weddingConfig.address}`;
+            const location = weddingConfig.mapUrl;
+            
+            const icsData = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Wedding Invitation//EN',
+                'BEGIN:VEVENT',
+                'SUMMARY:' + title,
+                'DESCRIPTION:' + details,
+                'LOCATION:' + location,
+                'DTSTART:20261006T193000',
+                'DTEND:20261006T233000',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            const blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.setAttribute('download', 'wedding-event.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("تم تنزيل ملف التقويم لأجهزة آبل! 🍏");
+        }
+
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 left-1/2 -translate-x-1/2 z-50 bg-theme-primary text-white px-5 py-2.5 rounded-full text-xs font-bold border border-theme-gold shadow-2xl transition duration-300 transform translate-y-0 opacity-100 flex items-center gap-2';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-amber-300"></i> <span>${msg}</span>`;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        function initPetalsCanvas() {
+            const canvas = document.getElementById('petalsCanvas');
+            const ctx = canvas.getContext('2d');
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            });
+
+            const numPetals = 22;
+            const petals = [];
+
+            for (let i = 0; i < numPetals; i++) {
+                petals.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 5 + 3.5,
+                    speedY: Math.random() * 0.5 + 0.2,
+                    speedX: Math.random() * 0.3 - 0.15,
+                    angle: Math.random() * 360,
+                    spin: Math.random() * 0.02 - 0.01,
+                    opacity: Math.random() * 0.45 + 0.2
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, width, height);
+
+                petals.forEach(p => {
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.angle);
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(197, 160, 89, ${p.opacity})`;
+                    ctx.ellipse(0, 0, p.size, p.size / 2, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    p.angle += p.spin;
+
+                    if (p.y > height) {
+                        p.y = -10;
+                        p.x = Math.random() * width;
+                    }
+                });
+
+                requestAnimationFrame(draw);
+            }
+
+            draw();
+        }
+
+        window.onload = function() {
+            initPetalsCanvas();
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+        };
+    </script>
+</body>
+</html>
